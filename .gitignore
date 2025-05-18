@@ -6,5 +6,4 @@ server/node_modules
 server/.env
 server/.gitignore
 .idea/
-.github/
 
