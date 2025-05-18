@@ -1,0 +1,10 @@
+client/node_modules
+client/.env
+client/.gitignore
+db/docker-compose.yml
+server/node_modules
+server/.env
+server/.gitignore
+.idea/
+.github/
+
