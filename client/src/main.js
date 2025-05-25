@@ -9,8 +9,10 @@ loadFonts();
 
 const app = createApp(App);
 
-app.config.globalProperties.$serverUrl = `http://${process.env.VUE_APP_SERVER_HOST}:${process.env.VUE_APP_SERVER_PORT}`;
-
+app.config.globalProperties.$serverUrl = process.env.VUE_APP_SERVER_URL
+app.config.globalProperties.$clientUrl = process.env.VUE_APP_CLIENT_URL
+app.config.globalProperties.$monoUrl = process.env.VUE_APP_MONO_URL;
+app.config.globalProperties.$monoXsign = process.env.VUE_APP_MONO_XSIGN
 app
     .use(router)
     .use(store)

@@ -4,6 +4,11 @@ import AppSearchTable from "@/components/tables/AppSearchTable.vue";
 export default {
   name: "AppPatients",
   components: {AppSearchTable},
+  data() {
+    return {
+      canEdit: false,
+    }
+  },
   computed: {
     headers() {
       return [
@@ -12,16 +17,14 @@ export default {
         ...(this.canEdit ? [{title: "Дії", key: "actions", align: "center", sortable: false}] : []),
       ];
     },
+    user() {
+      return this.$store.getters.getUser;
+    },
     patients: {
       get() {
         return this.$store.getters.getPatients
       }
     },
-    canEdit: {
-      get() {
-        return this.$store.getters.getActiveTab.canEdit
-      }
-    }
   },
   mounted() {
     this.$store.dispatch("fetchData", {
@@ -29,7 +32,14 @@ export default {
       path: 'patients',
       action: 'setPatients',
     })
-  }
+  },
+  watch: {
+    user: {
+      handler(user) {
+        this.canEdit = user?.tabs[2]?.canEdit
+      }
+    }
+  },
 }
 </script>
 

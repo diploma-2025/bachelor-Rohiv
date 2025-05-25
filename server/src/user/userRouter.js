@@ -16,7 +16,7 @@ const {getAdminValidator, authRateLimiter} = require("./userValidators");
 userRouter.get('/user', getUserValidator, async (req, res) => {
     try {
         const user = await findUserById(req.userId)
-        user.tabs = await getTabsByRoleId(user.role)
+        user.tabs = await getTabsByRoleId(user.role, user.tabs)
         return res.status(200).json(user)
     } catch (e) {
         return res.status(e.statusCode || 500).json({error: e.message})

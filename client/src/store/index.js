@@ -8,16 +8,14 @@ const getDefaultState = () => ({
     patientId: null,
     patient: {},
     date: new Date().toISOString().split('T')[0],
-    activeTab: {
-        id: 0,
-        canEdit: false
-    },
+    activeTab: {},
     user: null,
     popUp: {
         isOpen: false,
         name: null,
         extra: {}
-    }
+    },
+    template: null,
 })
 
 export default createStore({
@@ -34,6 +32,7 @@ export default createStore({
         getPatients: state => state.patients,
         getPatientId: state => state.patientId,
         getPatient: state => state.patient,
+        getTemplate: state => state.template,
     },
     mutations: {
         setRoles: (state, payload) => {
@@ -70,6 +69,9 @@ export default createStore({
         setPatient: (state, patient) => {
             state.patient = patient;
         },
+        setTemplate: (state, templates) => {
+            state.template = templates[0];
+        },
         clearPopup: (state) => {
             state.popUp.isOpen = false;
             setTimeout(() => {
@@ -89,6 +91,25 @@ export default createStore({
         }
     },
     actions: {
+        buyModule({state, commit}, {serverUrl, tabId, redirectUrl}) {
+            fetch(`${serverUrl}/orders/`, {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    amount: 20000,
+                    tabId: tabId,
+                    redirectUrl: redirectUrl
+                })
+            }).then(res => {
+                if (!res.ok) throw new Error(res.statusText)
+                return res.json()
+            }).then((res) => {
+                window.location.href = res.pageUrl;
+            }).catch(err => alert(err));
+        },
         fetchData({state, commit}, {serverUrl, path, action, query = null, router = null}) {
             fetch(`${serverUrl}/${path}?${query ? new URLSearchParams(query) : ''}`, {
                 method: "GET",

@@ -22,4 +22,11 @@ const mailer = {
     pass: process.env.PASS,
 }
 
-module.exports = {server, db, jwt, mailer}
+const mono = {
+    monoPEM: process.env.MONO_PEM,
+    monoXsign: process.env.MONO_XSIGN,
+    monoUrl: process.env.MONO_URL,
+    monoWebhook: process.env.MONO_WEBHOOK,
+}
+
+module.exports = {server, db, jwt, mailer, mono}

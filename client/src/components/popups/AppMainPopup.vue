@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import CreateTemplatePopup from "@/components/popups/template/CreateTemplatePopup.vue";
 import CreateAppointmentPopUp from "@/components/popups/appointment/CreateAppointmentPopUp.vue";
 import CreateUserPopUp from "@/components/popups/user/CreateUserPopUp.vue";
 import CreatePatientPopUp from "@/components/popups/patients/CreatePatientPopUp.vue";
@@ -35,6 +36,7 @@ import DeletePatientPopUp from "@/components/popups/patients/DeletePatientPopUp.
 export default {
   name: "AppMainPopup",
   components: {
+    CreateTemplatePopup,
     CreateAppointmentPopUp,
     CreateUserPopUp,
     CreatePatientPopUp,

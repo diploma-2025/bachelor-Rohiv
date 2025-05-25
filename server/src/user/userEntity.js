@@ -24,6 +24,10 @@ const UserEntity = new EntitySchema({
         role: {
             type: "int",
             nullable: false
+        },
+        tabs: {
+            type: 'simple-array',
+            nullable: false,
         }
     },
     relations: {
@@ -52,6 +56,13 @@ const UserEntity = new EntitySchema({
                 referencedColumnName: "id"
             },
             nullable: true,
+        },
+        templates: {
+            target: "template",
+            type: 'one-to-many',
+            inverseSide: 'user',
+            cascade: true,
+            eager: false,
         },
     }
 })

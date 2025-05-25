@@ -26,7 +26,8 @@ const createUser = async (data) => {
         email: data.email,
         password: hashedPassword,
         username: data.username,
-        role: data.roleId || 3
+        role: data.roleId || 3,
+        tabs: [2, 3]
     })
 
     await userRepository.save(user)
@@ -46,7 +47,8 @@ const createNurse = async (data, userId) => {
         password: hashedPassword,
         username: data.username,
         role: 3,
-        createdBy: {id: doctor.id}
+        createdBy: {id: doctor.id},
+        tabs: doctor.tabs
     })
     await userRepository.save(nurse)
     await sendEmail(data.email, password)
@@ -93,10 +95,17 @@ const verifyToken = (token) => {
     return jsonwebtoken.verify(token, jwt.secretKey);
 }
 
+const buyTab = async (data) => {
+    const user = await userRepository.findOneBy({id: data.userId})
+    user.tabs.push(data.tabId.toString())
+    await userRepository.save(user)
+}
+
 module.exports = {
     createUser, createNurse,
     findAllUsers, findUserAndAuthorize, findUserById, findAllNurses,
     updateUser,
     removeUserById,
-    assignToken, verifyToken
+    assignToken, verifyToken,
+    buyTab,
 }

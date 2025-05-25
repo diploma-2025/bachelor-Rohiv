@@ -15,6 +15,7 @@ export default {
   methods: {
     selectPatient(patientId) {
       this.$store.commit("setPatientId", patientId)
+      this.$router.push({name: "PatientInfo"});
       this.$store.commit("setActiveTab", {id: 4});
     }
   },
@@ -76,7 +77,7 @@ export default {
     <template v-slot:[`item.actions`]="{ item }">
       <v-col>
         <v-btn
-            v-if="activeTab?.id === 3"
+            v-if="$route.name === 'Patients'"
             icon
             elevation="0"
             @click="selectPatient(item.id)"

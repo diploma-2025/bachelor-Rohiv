@@ -13,9 +13,9 @@
         Записати
       </v-btn>
       <v-col v-if="user?.tabs?.length" cols="5" class="d-flex justify-center ga-5">
-        <v-btn v-for="tab in user.tabs" :key="tab.id"
-               :class="{ 'v-btn--active': activeTab.id === tab.id }"
-               @click="activeTab = tab"
+        <v-btn v-for="tab in user.tabs.filter(t => t.isShown)" :key="tab.id"
+               :class="{ 'v-btn--active': $route.name === tab.routeName }"
+               @click="goToTab(tab)"
         >
           {{ tab.name }}
         </v-btn>
@@ -66,6 +66,10 @@ export default {
       sessionStorage.removeItem('accessToken')
       this.$store.commit("clearStore")
       this.$router.push({name: 'Auth'})
+    },
+    goToTab(tab) {
+      this.activeTab = tab
+      this.$router.push({name: tab.routeName});
     }
   }
 }

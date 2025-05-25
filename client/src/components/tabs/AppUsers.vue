@@ -5,7 +5,9 @@ export default {
   name: "AppUsers",
   components: {AppSearchTable},
   data() {
-    return {}
+    return {
+      canEdit: false,
+    }
   },
   computed: {
     headers() {
@@ -24,16 +26,18 @@ export default {
         return this.$store.getters.getUsers;
       }
     },
-    canEdit: {
-      get() {
-        return this.$store.getters.getActiveTab.canEdit
+  },
+  watch: {
+    user: {
+      handler(user) {
+        this.canEdit = user.tabs[0].canEdit
       }
     }
   },
   mounted() {
     this.$store.dispatch("fetchData", {
       serverUrl: this.$serverUrl,
-      path: this.user.role === 1 ? 'users' : "users/nurse",
+      path: this.user?.role === 1 ? 'users' : "users/nurse",
       action: 'setUsers',
     })
   },
